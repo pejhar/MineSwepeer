@@ -1,0 +1,408 @@
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+  font-family: Tahoma, Arial, sans-serif;
+  background: #1a1a2e; /* پس‌زمینه تیره برای کنتراست بهتر */
+}
+
+#game {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: transparent; /* حذف پس‌زمینه کرم‌رنگ */
+}
+
+/* =====================================================
+   MAP CONTAINER – نسبی برای قرارگیری المان‌های مطلق
+   ===================================================== */
+#map-container {
+  position: relative;
+  margin: auto;
+  flex: 1 1 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  max-width: 100%;
+  max-height: 100%;
+  width: 100%;
+  height: 100%;
+}
+
+#sea-map {
+  display: block;
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+}
+
+/* =====================================================
+   BOARD – هگزها روی نقشه
+   ===================================================== */
+#board {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: auto;
+}
+
+/* =====================================================
+   STATUS BAR – شناور در پایین نقشه
+   ===================================================== */
+
+   @media (max-width: 700px) {
+        #status {
+            padding: 8px 14px;
+            gap: 12px;
+            bottom: 8px;
+            border-radius: 16px;
+        }
+    }
+    @media (max-width: 480px) {
+        #status {
+            padding: 6px 10px;
+            gap: 8px;
+            bottom: 4px;
+            border-radius: 12px;
+        }
+    }
+
+#status {
+    position: absolute;
+    bottom: 14px;
+    left: 14px;
+    right: 14px;
+    height: 62px;
+    background: rgba(8, 12, 35, 0);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border-radius: 20px;
+    border: 1px solid rgba(255, 255, 255, 0);
+    box-shadow: 0 8px 30px rgba(255, 255, 255, 0);
+    display: flex;
+    align-items: center;
+    justify-content: center; /* همه محتوا در مرکز */
+    z-index: 20;
+    padding: 0 18px;
+}
+
+.status-content {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    flex-wrap: nowrap;
+}
+
+.game-title {
+  font-size: 18px;
+  letter-spacing: 1px;
+  color: #ffd740;
+}
+
+.status-left,
+.status-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* نمایشگرهای دیجیتال */
+.display {
+    width: 58px;
+    height: 34px;
+    background: #080818;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 8px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.7);
+}
+.display span {
+    font-family: "Digital-7", "Seven Segment", "Courier New", monospace;
+    font-size: 26px;
+    color: #ff3b3b;
+    letter-spacing: 2px;
+    text-shadow: 0 0 14px rgba(255, 50, 50, 0.25);
+    line-height: 1;
+}
+
+@font-face {
+  font-family: "Digital-7";
+  src: url("assets/fonts/Digital-7.ttf");
+}
+
+/* دکمه سختی (همان ظاهر) */
+.difficulty-cycle {
+    width: 38px;
+    height: 38px;
+    border: none;
+    padding: 0;
+    background: transparent;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 30px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    transition: transform 0.2s;
+}
+.difficulty-cycle:hover {
+    transform: scale(1.08);
+}
+.difficulty-cycle img {
+    width: 80%;
+    height: 80%;
+    object-fit: contain;
+    filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.06));
+}
+
+
+/* ===== دکمه ریستارت جذاب ===== */
+.reset-btn {
+    width: 44px;
+    height: 44px;
+    border: none;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+    color: #fff;
+    font-size: 26px;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 15px rgba(238, 90, 36, 0.4);
+    transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    touch-action: manipulation;
+    line-height: 1;
+    border: 2px solid rgba(255, 255, 255, 0.15);
+    padding: 0;
+}
+
+.reset-btn:hover {
+    transform: scale(1.12) rotate(60deg);
+    box-shadow: 0 6px 25px rgba(238, 90, 36, 0.6);
+    background: linear-gradient(135deg, #ff7f7f, #f0932b);
+}
+
+.reset-btn:active {
+    transform: scale(0.9) rotate(0deg);
+    box-shadow: 0 2px 10px rgba(238, 90, 36, 0.3);
+}
+
+.reset-icon {
+    display: inline-block;
+    transition: transform 0.3s ease;
+    line-height: 1;
+}
+
+.reset-btn:hover .reset-icon {
+    animation: spin 0.8s linear infinite;
+}
+
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* ===== واکنش‌گرایی برای موبایل ===== */
+@media (max-width: 700px) {
+    #status {
+        height: 54px;
+        bottom: 8px;
+        left: 8px;
+        right: 8px;
+        border-radius: 16px;
+        padding: 0 12px;
+    }
+    .status-content {
+        gap: 12px;
+    }
+    .display {
+        width: 46px;
+        height: 28px;
+    }
+    .display span {
+        font-size: 20px;
+    }
+    .difficulty-cycle {
+        width: 30px;
+        height: 30px;
+    }
+    .reset-btn {
+        width: 36px;
+        height: 36px;
+        font-size: 20px;
+    }
+}
+@media (max-width: 480px) {
+    #status {
+        height: 48px;
+        bottom: 4px;
+        left: 4px;
+        right: 4px;
+        border-radius: 12px;
+        padding: 0 8px;
+    }
+    .status-content {
+        gap: 8px;
+    }
+    .display {
+        width: 38px;
+        height: 24px;
+    }
+    .display span {
+        font-size: 16px;
+        letter-spacing: 1px;
+    }
+    .difficulty-cycle {
+        width: 26px;
+        height: 26px;
+    }
+    .reset-btn {
+        width: 30px;
+        height: 30px;
+        font-size: 18px;
+    }
+}
+
+/* =====================================================
+   AD CONTAINER – روی نقشه (گوشه پایین-چپ)
+   ===================================================== */
+#ad-container {
+  position: absolute;
+  bottom: 60px;   /* بالای status bar */
+  left: 12px;
+  width: 200px;
+  max-width: 30%;
+  height: auto;
+  z-index: 15;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 8px;
+  padding: 4px;
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  pointer-events: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#ad-container img,
+#ad-container iframe,
+#ad-container div {
+  max-width: 100%;
+  max-height: 100%;
+  border-radius: 6px;
+}
+
+/* =====================================================
+   HEX CELLS (از game.js تنظیم می‌شوند ولی استایل‌های پایه)
+   ===================================================== */
+.hex {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: clamp(10px, 1.4vw, 14px);
+  color: white;
+  cursor: pointer;
+  user-select: none;
+  touch-action: none;
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+  background: rgba(20, 58, 94, 0.35);
+  box-shadow: 0 0 0 2px rgba(0, 200, 255, 0.85), 0 0 8px rgba(0, 180, 255, 0.45);
+  pointer-events: auto;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform 0.1s, filter 0.1s;
+}
+
+.hex:hover {
+  transform: scale(1.05);
+  filter: brightness(1.3);
+}
+
+.hex.open {
+  background: rgba(184, 142, 102, 0.35);
+  cursor: default;
+}
+
+.hex.flagged {
+  box-shadow: 0 0 0 2.5px rgba(255, 70, 70, 0.9), 0 0 10px rgba(255, 80, 80, 0.5);
+}
+
+.mine-icon {
+  width: 60%;
+  height: 60%;
+  object-fit: contain;
+  pointer-events: none;
+}
+
+.boom {
+  font-size: 40px;
+}
+
+/* رنگ‌های اعداد */
+.number-1 { color: #ffffff; text-shadow: 0 0 4px black; }
+.number-2 { color: #b2ff59; text-shadow: 0 0 4px black; }
+.number-3 { color: #ff8a80; text-shadow: 0 0 4px black; }
+.number-4 { color: #ea80fc; text-shadow: 0 0 4px black; }
+.number-5 { color: #ffd740; text-shadow: 0 0 4px black; }
+.number-6 { color: #80d8ff; text-shadow: 0 0 4px black; }
+
+/* نقطه‌های رنگی */
+.mine-dots {
+  width: 86%;
+  height: 86%;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+  pointer-events: none;
+  user-select: none;
+}
+
+.mine-dot {
+  display: block;
+  width: clamp(9px, 1.35vw, 16px);
+  height: clamp(9px, 1.35vw, 16px);
+  min-width: 9px;
+  min-height: 9px;
+  border-radius: 50%;
+  opacity: 1 !important;
+  background-color: #ffffff;
+  border: 1px solid rgba(255,255,255,0.9);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.8), 0 0 4px rgba(255,255,255,0.35);
+  flex-shrink: 0;
+}
+
+.mine-dot.low    { background-color: #008cff !important; }
+.mine-dot.medium { background-color: #00d084 !important; }
+.mine-dot.high   { background-color: #ff8c00 !important; }
+.mine-dot.danger { background-color: #ff1744 !important; }/* Android premium shell */
+body{background:#0c3c36;overscroll-behavior:none;-webkit-user-select:none;user-select:none}
+#splash{position:fixed;inset:0;z-index:9999;display:flex;align-items:center;justify-content:center;background:radial-gradient(circle at 50% 30%,#2b7a45,#0b3d36 72%);transition:opacity .3s ease;touch-action:manipulation}
+#splash.hide{opacity:0;pointer-events:none}.splash-card{text-align:center;color:white;padding:28px}.splash-icon{font-size:76px;filter:drop-shadow(0 8px 8px #0008)}.splash-title{font:900 clamp(38px,11vw,72px)/.95 Arial,sans-serif;letter-spacing:-2px;color:#ffd451;text-shadow:0 4px 0 #8b4e13,0 8px 18px #0008}.splash-sub{font:900 20px Arial,sans-serif;margin:10px 0 32px;color:#d7f5ff;letter-spacing:3px}.splash-card button{display:block;margin:0 auto 18px;padding:15px 38px;border:3px solid #fff3;border-radius:18px;background:linear-gradient(#ffd94e,#f5a51c);box-shadow:0 6px 0 #9e5d0b,0 12px 28px #0008;color:#57320a;font:900 25px Arial,sans-serif}.splash-card small{font:700 14px Arial,sans-serif;color:#d9f3e0}
+.hex{background:linear-gradient(145deg,rgba(131,199,78,.92),rgba(70,140,57,.92))!important;box-shadow:0 0 0 2px rgba(37,92,34,.8),inset 0 3px 4px rgba(255,255,255,.22),0 3px 5px rgba(0,0,0,.25)!important;color:#fff}.hex.open{background:linear-gradient(145deg,rgba(148,93,38,.88),rgba(101,62,24,.92))!important;box-shadow:0 0 0 2px rgba(73,45,17,.9),inset 0 2px 5px rgba(0,0,0,.28)!important}.hex.flagged{background:linear-gradient(145deg,#9ad45f,#65aa47)!important;box-shadow:0 0 0 2px #386c2f,0 0 10px #ffd44d88!important}.hex img{filter:drop-shadow(0 2px 2px #0007)}
+#status{background:linear-gradient(180deg,rgba(198,164,105,.96),rgba(126,91,51,.96));border:2px solid #ead5a7;box-shadow:0 5px 18px #0008,inset 0 2px 0 #fff5!important;backdrop-filter:none!important}.display{background:#17130f;border:2px solid #5c432c;box-shadow:inset 0 2px 8px #000,0 1px 0 #fff4}.difficulty-cycle,.reset-btn{filter:drop-shadow(0 2px 2px #0006)}
+
+/* Premium lightweight overlays */
+#top-actions{position:absolute;top:10px;right:10px;z-index:45;display:flex;gap:7px}#top-actions button{width:40px;height:40px;border:1px solid #ffffff33;border-radius:12px;background:#17202bd9;color:#fff;font-size:18px;box-shadow:0 4px 14px #0005}.overlay{position:fixed;inset:0;z-index:80;background:#07120dbd;display:flex;align-items:center;justify-content:center;backdrop-filter:blur(6px)}.overlay.hidden{display:none}.panel{min-width:250px;text-align:center;padding:24px;border-radius:24px;background:linear-gradient(180deg,#76511f,#3d2a12);border:3px solid #d9b56d;color:#fff;box-shadow:0 18px 60px #0009,inset 0 1px #fff5}.panel h2{margin:4px 0 16px;color:#ffe59a;letter-spacing:2px}.panel button{display:block;width:100%;margin:9px 0 0;padding:12px;border:0;border-radius:12px;font-weight:900;background:linear-gradient(#9bd557,#55a832);color:#17320c;box-shadow:0 4px 0 #376f20}.best-row{display:flex;justify-content:space-between;padding:7px 2px;border-bottom:1px solid #fff2}.new-record{animation:pulseGold .65s ease 3}@keyframes pulseGold{50%{filter:brightness(1.7);transform:scale(1.04)}}#particles{position:fixed;inset:0;z-index:75;pointer-events:none;overflow:hidden}.particle{position:absolute;width:9px;height:9px;border-radius:2px;background:#ffd740;animation:burst .8s ease-out forwards}@keyframes burst{to{transform:translate(var(--x),var(--y)) rotate(480deg);opacity:0}}.hex.explode{animation:hexBlast .42s ease-out}@keyframes hexBlast{50%{transform:scale(1.65);filter:brightness(2.4)}100%{transform:scale(.96)}}

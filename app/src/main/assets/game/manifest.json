@@ -1,0 +1,29 @@
+{
+    "name": "Hormuz Minesweeper",
+
+    "short_name": "Hormuz Mines",
+
+    "description": "Minesweeper game on Persian Gulf and Oman Sea",
+
+    "start_url": "./",
+
+    "display": "fullscreen",
+
+    "background_color": "#B88E64",
+
+    "theme_color": "#000080",
+
+    "lang": "fa",
+
+    "icons": [{
+            "src": "assets/icon-192.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        }, {
+            "src": "assets/icon-512.png",
+            "sizes": "512x512",
+            "type": "image/png"
+        }
+    ]
+
+}

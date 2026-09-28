@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="fa">
+
+<head>
+
+    <audio id="oceanSound" loop autoplay preload="auto">
+        <source src="assets/sounds/background.mp3" type="audio/mpeg">
+    </audio>
+
+
+    
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Mine Sweeper</title>
+
+    <link rel="stylesheet" href="style.css">
+
+
+
+    <meta name="theme-color" content="#000080">
+
+    <link rel="icon" href="assets/icon.png">
+
+
+
+</head>
+
+<body>
+
+    <div id="splash" onclick="dismissSplash()"><div class="splash-card"><div class="splash-icon">💣</div><div class="splash-title">MINESWEEPER</div><div class="splash-sub">HORMUZ EDITION</div><button>PLAY NOW</button><small>Tap = Dig • Hold = Flag</small></div></div>
+    <div id="game">
+        <div id="top-actions"><button id="sound-btn" onclick="toggleSound()" aria-label="Sound">🔊</button><button onclick="togglePause()" aria-label="Pause">⏸</button></div>
+        <div id="pause-overlay" class="overlay hidden"><div class="panel"><h2>PAUSED</h2><div id="best-times"></div><button onclick="togglePause()">RESUME</button><button onclick="restartGame(); togglePause(true)">RESTART</button></div></div>
+        <div id="result-overlay" class="overlay hidden"><div class="panel"><div id="result-icon">🏆</div><h2 id="result-title">YOU WIN!</h2><p id="result-text"></p><button onclick="hideResult(); restartGame()">PLAY AGAIN</button></div></div>
+        <div id="particles"></div>
+
+        <!-- ============================================
+             MAP CONTAINER
+             ============================================ -->
+        <div id="map-container">
+
+            <!-- نقشه -->
+            <img id="sea-map" src="assets/map.png" alt="Hormuz Map">
+
+            <!-- هگز‌ها -->
+            <div id="board"></div>
+
+            <!-- ==========================================
+                STATUS BAR – شناور در پایین نقشه
+                ========================================== -->
+            <div id="status">
+                <!-- شمارنده مین -->
+                <div class="display" id="mine-display">
+                    <span id="mine-count">045</span>
+                </div>
+
+                <!-- دکمه سختی -->
+                <div class="difficulty-switch">
+                    <button class="difficulty-cycle" id="difficulty-btn" data-level="medium">
+                        <img id="difficulty-image" src="assets/medium.png" alt="سختی">
+                    </button>
+                </div>
+
+                <!-- دکمه ریستارت جذاب -->
+                <button class="reset-btn" onclick="restartGame()" title="شروع مجدد">
+                    <span class="reset-icon">⟳</span>
+                </button>
+
+                <!-- تایمر -->
+                <div class="display" id="timer-display">
+                    <span id="timer">000</span>
+                </div>
+            </div>
+
+            <!-- ==========================================
+                 AD BANNER – روی نقشه (گوشه پایین-چپ)
+                 ========================================== -->
+        </div>
+        <!-- /map-container -->
+
+    </div>
+    <!-- /game -->
+
+    <script>
+function dismissSplash(){const s=document.getElementById('splash'); if(s){s.classList.add('hide'); setTimeout(()=>s.remove(),350);} const a=document.getElementById('oceanSound'); if(a) a.play().catch(()=>{});}
+</script>
+    <script src="game.js"></script>
+
+</body>
+
+</html>

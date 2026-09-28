@@ -1,0 +1,1 @@
+-keep class ir.keynu.hormuzmines.MainActivity { *; }
