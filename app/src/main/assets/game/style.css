@@ -57,3 +57,20 @@
 .game-paused #map-container,.game-paused #game-dock{pointer-events:none}
 #controls{display:none!important}
 @media(max-width:390px){.pause-panel{padding:23px 20px 19px}.pause-mark{width:56px;height:56px}#pause-time{font-size:36px}}
+\n/* v2.6 responsive menu + clean settings/result */
+.timer-icon{display:none!important}
+#menu{padding:max(12px,env(safe-area-inset-top)) 18px max(12px,env(safe-area-inset-bottom));justify-content:center;gap:clamp(7px,1.25vh,14px)}
+.menu-brand{margin-bottom:clamp(6px,1.2vh,16px)}
+.menu-brand img{width:clamp(86px,15vh,140px);height:clamp(86px,15vh,140px);margin-bottom:clamp(4px,.8vh,10px)}
+.menu-brand strong{font-size:clamp(34px,5.2vh,48px)}
+.menu-brand span{font-size:clamp(16px,2.5vh,23px)}
+.start-game{height:clamp(48px,7.2vh,64px);font-size:clamp(19px,2.7vh,24px);flex:0 0 auto}
+.difficulty-picker{margin-top:clamp(5px,1vh,12px);gap:clamp(6px,.9vh,10px)}
+.difficulty-picker button{height:clamp(44px,6.5vh,58px);min-height:0;padding:0 14px;border-radius:clamp(14px,2.2vh,19px)}
+.difficulty-picker img{width:clamp(27px,4vh,34px)}
+.difficulty-picker b{font-size:clamp(16px,2.2vh,19px)}
+.howto{margin-top:clamp(5px,1vh,12px);padding:clamp(8px,1.2vh,12px) 14px;line-height:1.4}
+.setting-row span{font-weight:800;letter-spacing:.2px}
+.result-panel .result-menu-btn{margin-top:10px;background:linear-gradient(#174d62,#0a3346);color:#fff;border:1px solid #7de7f055}
+.result-stats{display:grid;gap:8px;margin:14px 0;text-align:left}.result-stats>div{display:flex;justify-content:space-between;gap:16px;padding:9px 11px;border-radius:11px;background:#031f2c88;border:1px solid #ffffff18}.result-stats span{color:#bfe8f2}.result-stats b{color:#ffe070}.retry-copy{font-size:13px;line-height:1.45;color:#d9eef3;margin:12px 4px 16px}
+@media(max-height:700px){.howto{font-size:11px}.gear{width:44px;height:44px;font-size:23px}.menu-brand img{width:82px;height:82px}.menu-brand strong{font-size:32px}.menu-brand span{font-size:15px}.difficulty-picker button{height:42px}.start-game{height:46px}}
