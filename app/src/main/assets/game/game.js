@@ -139,7 +139,7 @@ function isWaterAt(centerX, centerY, radius) {
 // Hex Settings
 // =====================================================
 
-const TARGET_HEX_SIZE_NATURAL = 44;
+const TARGET_HEX_SIZE_NATURAL = 48;
 
 let HEX_SIZE_NAT = 0;
 
@@ -195,7 +195,7 @@ function buildHexGridFromMask() {
 
   calculateNaturalHexSize();
 
-  const HEX_GAP = 5;
+  const HEX_GAP = 2;
 
   const stepX = HEX_WIDTH_NAT + HEX_GAP;
 
@@ -236,6 +236,22 @@ function buildHexGridFromMask() {
   }
 
   console.log("Water hexes:", board.length);
+
+  // Defensive fallback for Android WebView: if canvas mask sampling fails,
+  // build a conservative center-water grid so the game never starts invisible.
+  if (board.length < MINE_COUNT) {
+    console.warn("Mask sampling produced too few cells; using fallback grid.");
+    board = []; cellIdCounter = 0;
+    let r = 0;
+    for (let y = stepY; y < MAP_HEIGHT - stepY; y += stepY, r++) {
+      const off = r % 2 ? stepX * 0.5 : 0;
+      for (let x = stepX + off; x < MAP_WIDTH - stepX; x += stepX) {
+        // Keep fallback mostly in the sea: accept dark/blue map pixels.
+        const p = (()=>{ try { return mapContext.getImageData(Math.round(x),Math.round(y),1,1).data; } catch(e){ return [0,0,0,255]; }})();
+        if (p[0] < 180) board.push({id:cellIdCounter++,naturalX:x,naturalY:y,mine:false,number:0,open:false,flag:false,exploded:false,element:null,neighbors:[]});
+      }
+    }
+  }
 }
 
 // =====================================================
@@ -300,11 +316,11 @@ function resizeBoard() {
 
   boardEl.style.overflow = "hidden";
 
-  const scale = map.clientWidth / MAP_WIDTH;
+  const scale = (map.clientWidth > 0 && MAP_WIDTH > 0) ? map.clientWidth / MAP_WIDTH : 1;
 
-  const displayWidth = HEX_WIDTH_NAT * scale;
+  const displayWidth = Math.max(22, HEX_WIDTH_NAT * scale);
 
-  const displayHeight = HEX_HEIGHT_NAT * scale;
+  const displayHeight = Math.max(26, HEX_HEIGHT_NAT * scale);
 
   board.forEach((cell) => {
     if (!cell.element) return;
@@ -752,11 +768,11 @@ function createBoardHTML() {
 
   const map = document.getElementById("sea-map");
 
-  const scale = map.clientWidth / MAP_WIDTH;
+  const scale = (map.clientWidth > 0 && MAP_WIDTH > 0) ? map.clientWidth / MAP_WIDTH : 1;
 
-  const displayWidth = HEX_WIDTH_NAT * scale;
+  const displayWidth = Math.max(22, HEX_WIDTH_NAT * scale);
 
-  const displayHeight = HEX_HEIGHT_NAT * scale;
+  const displayHeight = Math.max(26, HEX_HEIGHT_NAT * scale);
 
   board.forEach((cell) => {
     const el = document.createElement("div");

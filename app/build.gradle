@@ -7,5 +7,4 @@ android { namespace 'ir.keynu.hormuzmines'; compileSdk 35
 
 
 dependencies {
-    implementation 'ir.tapsell.plus:tapsell-plus-sdk-android:2.3.3'
 }

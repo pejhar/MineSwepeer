@@ -481,3 +481,50 @@ body{background:#0c3c36;overscroll-behavior:none;-webkit-user-select:none;user-s
   .flag-mode-btn img { width:20px !important; height:20px !important; max-width:20px !important; max-height:20px !important; }
   .control-divider { height:27px; }
 }
+
+
+/* ===== v1.4: WebView-safe board visibility ===== */
+#sea-map { position:relative !important; z-index:1 !important; }
+#board {
+  position:absolute !important;
+  z-index:30 !important;
+  pointer-events:none !important;
+  overflow:visible !important;
+}
+#board .hex {
+  z-index:2 !important;
+  display:flex !important;
+  visibility:visible !important;
+  opacity:1 !important;
+  pointer-events:auto !important;
+  overflow:hidden !important;
+  background:linear-gradient(145deg,#2bbbd0,#08799f) !important;
+  clip-path:polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%) !important;
+  -webkit-clip-path:polygon(50% 0%,100% 25%,100% 75%,50% 100%,0% 75%,0% 25%) !important;
+  box-shadow:none !important;
+  filter:drop-shadow(0 0 1px #032f48) drop-shadow(0 0 2px #d8ffff) !important;
+  text-shadow:0 1px 2px #00283c !important;
+}
+#board .hex::before { display:none !important; content:none !important; }
+#board .hex.open { background:linear-gradient(145deg,#f0c878,#b77a35) !important; filter:drop-shadow(0 0 1px #5b3619) !important; }
+#board .hex.flagged { background:linear-gradient(145deg,#ffd467,#e79428) !important; filter:drop-shadow(0 0 2px #ffec8a) !important; }
+#board.flag-mode .hex:not(.open) { filter:drop-shadow(0 0 2px #fff3a5) drop-shadow(0 0 4px #ffc928) !important; }
+
+/* Dedicated ad area. It never covers the board/status bar. */
+#ad-slot {
+  position:absolute;
+  z-index:45;
+  left:50%;
+  top:8px;
+  transform:translateX(-50%);
+  width:min(92%, 728px);
+  min-height:0;
+  max-height:90px;
+  overflow:hidden;
+  display:flex;
+  justify-content:center;
+  align-items:flex-start;
+  pointer-events:auto;
+}
+#mediaad-JR3Ax { width:100%; text-align:center; }
+#mediaad-JR3Ax iframe, #mediaad-JR3Ax img { max-width:100% !important; height:auto; }

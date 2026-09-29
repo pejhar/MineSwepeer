@@ -9,6 +9,18 @@
 
 
     
+    <!-- MediaAd/Tapsell web placement loader (from the original web project) -->
+    <script type="text/javascript">
+      (function(){
+        const script=document.createElement("script");
+        script.type="text/javascript";
+        script.async=true;
+        script.src="https://s1.mediaad.org/serve/keynu.ir/loader.js";
+        document.head.appendChild(script);
+      })();
+    </script>
+    <script type="text/javascript" src="https://s1.mediaad.org/serve/121760/retargeting.js" async></script>
+
     <meta charset="UTF-8">
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -45,6 +57,9 @@
 
             <!-- هگز‌ها -->
             <div id="board"></div>
+
+            <!-- Publisher placement provided by user -->
+            <div id="ad-slot"><div id="mediaad-JR3Ax"></div></div>
 
             <!-- ==========================================
                 STATUS BAR – شناور در پایین نقشه
