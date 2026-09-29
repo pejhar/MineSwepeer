@@ -3,11 +3,11 @@ plugins {
 }
 
 android {
-    namespace 'com.koregeloo.minesweeper'
+    namespace 'ir.keynu.hormuzmines'
     compileSdk 35
 
     defaultConfig {
-        applicationId 'com.koregeloo.minesweeper'
+        applicationId 'ir.keynu.hormuzmines'
         minSdk 23
         targetSdk 35
         versionCode 1
