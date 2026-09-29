@@ -31,9 +31,9 @@
 
     <div id="splash"><div class="splash-card"><div class="splash-badge">HORMUZ</div><div class="splash-icon">🚩💣</div><div class="splash-title">MINESWEEPER</div><div class="splash-sub">HORMUZ EDITION</div><button onclick="dismissSplash()">PLAY NOW</button><div class="splash-help"><b>HOW TO PLAY</b><span>Clear the turquoise sea tiles without hitting a mine.</span><span>Use the 🚩 button to place or remove flags.</span></div></div></div>
     <div id="game">
-        <div id="pause-overlay" class="overlay hidden"><div class="panel"><h2>PAUSED</h2><div id="best-times"></div><button onclick="togglePause()">RESUME</button><button onclick="restartGame(); togglePause(true)">RESTART</button></div></div>
+        <div id="pause-overlay" class="overlay hidden"><div class="panel"><h2>PAUSED</h2><div id="best-times"></div><button onclick="togglePause()">RESUME</button><button onclick="restartGame()">RESTART</button></div></div>
         <div id="result-overlay" class="overlay hidden"><div class="panel"><div id="result-icon">🏆</div><h2 id="result-title">YOU WIN!</h2><p id="result-text"></p><button onclick="hideResult(); restartGame()">PLAY AGAIN</button></div></div>
-        <div id="particles"></div><button id="quick-pause" onclick="togglePause()" aria-label="Pause">⏸</button>
+        <div id="particles"></div><button id="sound-btn" onclick="toggleSound()" aria-label="Sound">🔊</button><button id="quick-pause" onclick="togglePause()" aria-label="Pause">⏸</button>
 
         <!-- ============================================
              MAP CONTAINER
