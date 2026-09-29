@@ -11,6 +11,7 @@
 // =====================================================
 
 let eventController = null;
+let boardEventsBound = false;
 
 // =====================================================
 // Difficulty Settings
@@ -138,7 +139,7 @@ function isWaterAt(centerX, centerY, radius) {
 // Hex Settings
 // =====================================================
 
-const TARGET_HEX_SIZE_NATURAL = 40;
+const TARGET_HEX_SIZE_NATURAL = 44;
 
 let HEX_SIZE_NAT = 0;
 
@@ -194,7 +195,7 @@ function buildHexGridFromMask() {
 
   calculateNaturalHexSize();
 
-  const HEX_GAP = 8;
+  const HEX_GAP = 5;
 
   const stepX = HEX_WIDTH_NAT + HEX_GAP;
 
@@ -1381,11 +1382,11 @@ async function startApplication() {
 
   // Events
 
-  enableBoardClick();
-
-  enableRightClick();
-
-  enableLongPress();
+  if (!boardEventsBound) {
+    enableBoardClick();
+    enableRightClick();
+    boardEventsBound = true;
+  }
 
   console.log("Game Ready");
 }
