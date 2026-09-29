@@ -33,3 +33,14 @@ function toggleSound(){soundMuted=!soundMuted;for(const id of['oceanSound','star
 function chooseDifficulty(k){if(!DIFFICULTIES[k])return;difficulty=k;mines=DIFFICULTIES[k].mines;document.querySelectorAll('.difficulty-picker button').forEach(b=>b.classList.toggle('selected',b.dataset.diff===k));restartGame(false)}
 Object.assign(window,{chooseDifficulty,restartGame,toggleFlagMode,togglePause,hideResult,dismissSplash,toggleSound});
 document.addEventListener('DOMContentLoaded',()=>{const svg=$('board');svg.addEventListener('click',e=>{const g=e.target.closest('.cell');if(!g)return;const c=board.find(x=>x.id===Number(g.dataset.id));if(c)(flagMode?toggleFlag:openCell)(c)});restartGame();console.info(`Hormuz board: ${board.length} complete hexes`) });
+
+// v2.1 screen/navigation + compact settings
+let musicEnabled=true;
+function showMenu(){playSound('startSound');$('splash')?.classList.add('hidden-screen');$('menu')?.classList.remove('hidden-screen');$('game')?.classList.add('hidden-screen')}
+function startFromMenu(){$('menu')?.classList.add('hidden-screen');$('game')?.classList.remove('hidden-screen');restartGame(true);if(musicEnabled&&!soundMuted)$('oceanSound')?.play().catch(()=>{})}
+function backToMenu(){stopTimer();paused=false;$('game')?.classList.add('hidden-screen');$('menu')?.classList.remove('hidden-screen')}
+function openSettings(){$('settings')?.classList.remove('hidden')}
+function closeSettings(){$('settings')?.classList.add('hidden')}
+function setSound(on){soundMuted=!on;['startSound','clickSound','boomSound','winSound'].forEach(id=>{const a=$(id);if(a)a.muted=!on})}
+function setMusic(on){musicEnabled=on;const a=$('oceanSound');if(!a)return;if(on&&!soundMuted)a.play().catch(()=>{});else a.pause()}
+Object.assign(window,{showMenu,startFromMenu,backToMenu,openSettings,closeSettings,setSound,setMusic});

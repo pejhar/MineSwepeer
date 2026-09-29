@@ -1,64 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no">
-  <meta name="theme-color" content="#06384a">
-  <title>Hormuz Minesweeper</title>
-  <link rel="stylesheet" href="style.css">
-  <link rel="icon" href="assets/icon.png">
-  <script type="text/javascript">
-    (function (){
-      const head=document.getElementsByTagName("head")[0];
-      const script=document.createElement("script");
-      script.type="text/javascript";
-      script.async=true;
-      script.src="https://s1.mediaad.org/serve/keynu.ir/loader.js";
-      head.appendChild(script);
-    })();
-  </script>
-</head>
-<body>
-<audio id="oceanSound" loop preload="auto"><source src="assets/sounds/background.mp3" type="audio/mpeg"></audio>
-<audio id="startSound" preload="auto"><source src="assets/sounds/start.wav" type="audio/wav"></audio>
-<audio id="clickSound" preload="auto"><source src="assets/sounds/click.mp3" type="audio/mpeg"></audio>
-<audio id="boomSound" preload="auto"><source src="assets/sounds/boom.mp3" type="audio/mpeg"></audio>
-<audio id="winSound" preload="auto"><source src="assets/sounds/win.mp3" type="audio/mpeg"></audio>
-
-<div id="splash">
-  <div class="splash-shade"></div>
-  <div class="splash-content">
-    <img class="brand-icon" src="assets/icon.png" alt="Hormuz Minesweeper">
-    <div class="splash-title"><span>HORMUZ</span><strong>MINESWEEPER</strong></div>
-    <button class="start-game" onclick="dismissSplash()"><span class="play-triangle">▶</span> START GAME</button>
-    <div class="difficulty-picker">
-      <button data-diff="easy" onclick="chooseDifficulty('easy')"><img src="assets/easy.png"><b>Easy</b><span>10 mines</span></button>
-      <button class="selected" data-diff="medium" onclick="chooseDifficulty('medium')"><img src="assets/medium.png"><b>Medium</b><span>15 mines</span></button>
-      <button data-diff="hard" onclick="chooseDifficulty('hard')"><img src="assets/hard.png"><b>Hard</b><span>25 mines</span></button>
-    </div>
-    <div class="howto">Tap a sea tile to dig<br>Tap the flag button, then a tile, to place or remove a flag</div>
-  </div>
-</div>
-
-<div id="game">
-  <div id="ad-shell"><div id="mediaad-JR3Ax"></div></div>
-  <div id="map-container">
-    <img id="sea-map" src="assets/map.png" alt="Hormuz map">
-    <svg id="board" xmlns="http://www.w3.org/2000/svg" aria-label="Hormuz Minesweeper board"></svg>
-    <div id="top-stats">
-      <div class="stat-pill"><span class="ico">💣</span><b id="mine-count">15</b></div>
-      <div class="stat-pill timer"><span class="ico">⏱</span><b id="timer">00:00</b></div>
-    </div>
-    <div id="controls">
-      <button class="round-btn" id="sound-btn" onclick="toggleSound()" aria-label="Sound">🔊</button>
-      <button class="round-btn flag-btn" id="flag-mode-btn" onclick="toggleFlagMode()" aria-label="Flag mode"><img src="assets/flag.png"><span id="flag-left">15</span></button>
-      <button class="round-btn" id="pause-btn" onclick="togglePause()" aria-label="Pause">Ⅱ</button>
-    </div>
-  </div>
-
-  <div id="pause-overlay" class="overlay hidden"><div class="panel"><h2>PAUSED</h2><div id="best-times"></div><button onclick="togglePause()">RESUME</button></div></div>
-  <div id="result-overlay" class="overlay hidden"><div class="panel"><div id="result-icon">🏆</div><h2 id="result-title">YOU WIN!</h2><p id="result-text"></p><button onclick="hideResult();restartGame(true)">PLAY AGAIN</button></div></div>
-</div>
-<script src="game.js"></script>
-</body>
-</html>
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no"><meta name="theme-color" content="#06384a"><title>Hormuz Minesweeper</title><link rel="stylesheet" href="style.css"><link rel="icon" href="assets/icon.png"><script>(function(){const h=document.head,s=document.createElement('script');s.async=true;s.src='https://s1.mediaad.org/serve/keynu.ir/loader.js';h.appendChild(s)})();</script></head><body>
+<audio id="oceanSound" loop preload="auto"><source src="assets/sounds/background.mp3"></audio><audio id="startSound" preload="auto"><source src="assets/sounds/start.wav"></audio><audio id="clickSound" preload="auto"><source src="assets/sounds/click.mp3"></audio><audio id="boomSound" preload="auto"><source src="assets/sounds/boom.mp3"></audio><audio id="winSound" preload="auto"><source src="assets/sounds/win.mp3"></audio>
+<div id="splash" onclick="showMenu()"><img src="assets/splash-reference.png" alt="Hormuz Minesweeper"><div class="tap-enter">TAP TO ENTER</div></div>
+<div id="menu" class="screen hidden-screen"><button class="gear" onclick="openSettings()">⚙</button><div class="menu-brand"><img src="assets/icon.png"><div><strong>HORMUZ</strong><span>MINESWEEPER</span></div></div><button class="start-game" onclick="startFromMenu()"><span>▶</span> Start Game</button><div class="difficulty-picker"><button data-diff="easy" onclick="chooseDifficulty('easy')"><img src="assets/easy.png"><b>Easy</b><span>10 mines</span></button><button class="selected" data-diff="medium" onclick="chooseDifficulty('medium')"><img src="assets/medium.png"><b>Medium</b><span>15 mines</span></button><button data-diff="hard" onclick="chooseDifficulty('hard')"><img src="assets/hard.png"><b>Hard</b><span>25 mines</span></button></div><div class="howto"><b>💡 How to play</b><br>Tap a tile to dig<br>Use the flag button to place or remove flags</div></div>
+<div id="game" class="hidden-screen"><div id="ad-shell"><div id="mediaad-JR3Ax"></div></div><div id="map-container"><img id="sea-map" src="assets/map.png"><svg id="board" xmlns="http://www.w3.org/2000/svg"></svg><div id="bottom-hud"><button class="hud-btn" onclick="backToMenu()">‹</button><div class="hud-stat"><span>💣</span><b id="mine-count">15</b></div><div class="hud-stat timer"><span>⏱</span><b id="timer">00:00</b></div><div class="hud-stat"><span>🚩</span><b id="flag-left">15</b></div></div><div id="controls"><button class="round-btn flag-btn" id="flag-mode-btn" onclick="toggleFlagMode()"><img src="assets/flag.png"></button><button class="round-btn" id="pause-btn" onclick="togglePause()">Ⅱ</button><button class="round-btn" onclick="openSettings()">⚙</button></div></div></div>
+<div id="settings" class="overlay hidden"><div class="settings-panel"><div class="settings-title"><button onclick="closeSettings()">‹</button><b>Settings</b></div><div class="setting-row"><span>🔊 Sound</span><label><input id="sound-toggle" type="checkbox" checked onchange="setSound(this.checked)"><i></i></label></div><div class="setting-row"><span>♫ Music</span><label><input id="music-toggle" type="checkbox" checked onchange="setMusic(this.checked)"><i></i></label></div><hr><h3>How to Play</h3><p>☝ Tap a tile to dig</p><p>🚩 Tap the flag button, then a tile, to place or remove a flag</p><p>💣 Avoid mines and clear all safe tiles</p></div></div>
+<div id="pause-overlay" class="overlay hidden"><div class="panel"><h2>PAUSED</h2><div id="best-times"></div><button onclick="togglePause()">RESUME</button></div></div><div id="result-overlay" class="overlay hidden"><div class="panel"><div id="result-icon">🏆</div><h2 id="result-title">YOU WIN!</h2><p id="result-text"></p><button onclick="hideResult();restartGame(true)">PLAY AGAIN</button></div></div>
+<script src="game.js"></script></body></html>
