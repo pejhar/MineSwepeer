@@ -1,3 +1,5 @@
+# Hormuz Minesweeper v1.8
+
 # Hormuz Minesweeper Android
 Lightweight offline Android wrapper for the supplied Hormuz Minesweeper game.
 
