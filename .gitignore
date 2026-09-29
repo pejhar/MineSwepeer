@@ -1,0 +1,4 @@
+release.jks
+keystore-base64.txt
+*.jks
+*.keystore
