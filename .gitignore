@@ -1,4 +1,16 @@
+# Signing keys / secrets
 release.jks
 keystore-base64.txt
 *.jks
 *.keystore
+
+# Gradle / Android build output
+.gradle/
+build/
+**/build/
+local.properties
+
+# IDE / OS
+.idea/
+*.iml
+.DS_Store
