@@ -15,8 +15,8 @@ Debug: `gradle assembleDebug`.
 ## Offline + Ads architecture
 - All game HTML/CSS/JS, maps, fonts and sounds are packaged inside the APK.
 - The WebView blocks all HTTP/HTTPS traffic, so gameplay cannot depend on the Internet.
-- Only the native Google Mobile Ads SDK is allowed to use the network.
-- Current App ID and banner unit are Google's official TEST IDs. Replace both with your own AdMob IDs before publishing.
+- Only the native Tapsell Plus SDK is allowed to use the network.
+- Tapsell Plus SDK 2.3.3 is packaged and initialized with Tapsell's official test app key. Replace it with your production Tapsell app key before publishing. A production banner/interstitial also requires your dashboard zone ID.
 - Added: pause overlay, sound toggle, best time per difficulty, win/lose overlay, particle/explosion effects, vibration permission, lifecycle-safe ad handling.
 
 ## Build APK online with GitHub Actions
@@ -25,3 +25,11 @@ Debug: `gradle assembleDebug`.
 3. Click **Run workflow** and wait for the build to finish.
 4. Open the successful run and download **HormuzMinesweeper-debug-apk** from Artifacts.
 5. Extract the downloaded artifact ZIP; it contains `app-debug.apk`.
+
+
+## v1.2 UI fixes
+- Visible honeycomb rims with green closed cells and warm sand opened cells.
+- Sound, pause and explicit flag-mode controls moved into the bottom dock.
+- Flag mode: tap a cell to place/remove a flag; tap the flag button again to return to dig mode.
+- Reworked start screen and instructions.
+- AdMob removed; Tapsell Plus 2.3.3 packaged.

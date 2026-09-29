@@ -1223,7 +1223,9 @@ function enableBoardClick() {
 
     const target = e.target.closest(".hex");
     if (!target) return;
-    openCellById(Number(target.dataset.id));
+    const id = Number(target.dataset.id);
+    if (flagMode) toggleFlagById(id);
+    else openCellById(id);
   });
 }
 
@@ -1510,12 +1512,21 @@ window.addEventListener("DOMContentLoaded", () => {
 
 });
 
+// ===== Explicit DIG / FLAG mode =====
+let flagMode = false;
+function applyFlagMode(){
+  const b=document.getElementById('flag-mode-btn');
+  if(b){ b.classList.toggle('active',flagMode); b.setAttribute('aria-pressed',flagMode?'true':'false'); }
+  document.getElementById('board')?.classList.toggle('flag-mode',flagMode);
+}
+function toggleFlagMode(){ flagMode=!flagMode; applyFlagMode(); if(navigator.vibrate) navigator.vibrate(20); }
+
 // ===== Lightweight polish: sound, pause, records, particles =====
 let soundEnabled = localStorage.getItem('hm_sound') !== '0';
 let paused = false;
 function applySound(){ [clickSound,boomSound,winSound,oceanSound].forEach(a=>{ if(a) a.muted=!soundEnabled; }); const b=document.getElementById('sound-btn'); if(b)b.textContent=soundEnabled?'🔊':'🔇'; }
 function toggleSound(){ soundEnabled=!soundEnabled; localStorage.setItem('hm_sound',soundEnabled?'1':'0'); applySound(); if(soundEnabled) oceanSound.play().catch(()=>{}); }
-function togglePause(forceClose=false){ const o=document.getElementById('pause-overlay'); if(!o)return; if(forceClose){paused=false;o.classList.add('hidden');return;} paused=!paused; o.classList.toggle('hidden',!paused); if(paused){stopTimer(); renderBestTimes();} else if(gameStarted&&!gameFinished){startTimer();} }
+function togglePause(forceClose=false){ const o=document.getElementById('pause-overlay'); if(!o)return; if(forceClose){paused=false;o.classList.add('hidden');} else {paused=!paused; o.classList.toggle('hidden',!paused); if(paused){stopTimer(); renderBestTimes();} else if(gameStarted&&!gameFinished){startTimer();}} const b=document.getElementById('pause-btn'); if(b){b.textContent=paused?'▶':'⏸';b.classList.toggle('active',paused);} }
 function bestKey(){return 'hm_best_'+currentDifficulty;}
 function saveBestTime(){ const old=Number(localStorage.getItem(bestKey())||0); if(!old||timer<old){localStorage.setItem(bestKey(),String(timer));return true;} return false; }
 function renderBestTimes(){ const el=document.getElementById('best-times'); if(!el)return; el.innerHTML=['easy','medium','hard'].map(k=>{let v=localStorage.getItem('hm_best_'+k);return `<div class="best-row"><span>${k.toUpperCase()}</span><b>${v?v+'s':'—'}</b></div>`}).join(''); }
@@ -1523,4 +1534,4 @@ function showResult(win,record=false){const o=document.getElementById('result-ov
 function hideResult(){document.getElementById('result-overlay')?.classList.add('hidden');}
 function createParticles(win){const box=document.getElementById('particles');if(!box)return;box.innerHTML='';const n=win?36:22;for(let i=0;i<n;i++){const p=document.createElement('i');p.className='particle';p.style.left='50%';p.style.top='48%';const a=Math.random()*Math.PI*2,d=60+Math.random()*190;p.style.setProperty('--x',Math.cos(a)*d+'px');p.style.setProperty('--y',Math.sin(a)*d+'px');if(!win)p.style.background='#ff6b35';box.appendChild(p);}setTimeout(()=>box.innerHTML='',900);}
 document.addEventListener('visibilitychange',()=>{if(document.hidden&&gameStarted&&!gameFinished&&!paused)togglePause();});
-window.addEventListener('DOMContentLoaded',applySound);
+window.addEventListener('DOMContentLoaded',()=>{applySound();applyFlagMode();});

@@ -7,5 +7,5 @@ android { namespace 'ir.keynu.hormuzmines'; compileSdk 35
 
 
 dependencies {
-    implementation 'com.google.android.gms:play-services-ads:24.5.0'
+    implementation 'ir.tapsell.plus:tapsell-plus-sdk-android:2.3.3'
 }

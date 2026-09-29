@@ -29,9 +29,8 @@
 
 <body>
 
-    <div id="splash" onclick="dismissSplash()"><div class="splash-card"><div class="splash-icon">💣</div><div class="splash-title">MINESWEEPER</div><div class="splash-sub">HORMUZ EDITION</div><button>PLAY NOW</button><small>Tap = Dig • Hold = Flag</small></div></div>
+    <div id="splash"><div class="splash-card"><div class="splash-badge">HORMUZ</div><div class="splash-icon">💣</div><div class="splash-title">MINESWEEPER</div><div class="splash-sub">HORMUZ EDITION</div><button onclick="dismissSplash()">PLAY NOW</button><div class="splash-help"><b>HOW TO PLAY</b><span>Clear every safe sea tile without hitting a mine.</span><span>Use the 🚩 button to place or remove flags.</span></div></div></div>
     <div id="game">
-        <div id="top-actions"><button id="sound-btn" onclick="toggleSound()" aria-label="Sound">🔊</button><button onclick="togglePause()" aria-label="Pause">⏸</button></div>
         <div id="pause-overlay" class="overlay hidden"><div class="panel"><h2>PAUSED</h2><div id="best-times"></div><button onclick="togglePause()">RESUME</button><button onclick="restartGame(); togglePause(true)">RESTART</button></div></div>
         <div id="result-overlay" class="overlay hidden"><div class="panel"><div id="result-icon">🏆</div><h2 id="result-title">YOU WIN!</h2><p id="result-text"></p><button onclick="hideResult(); restartGame()">PLAY AGAIN</button></div></div>
         <div id="particles"></div>
@@ -72,6 +71,11 @@
                 <div class="display" id="timer-display">
                     <span id="timer">000</span>
                 </div>
+
+                <div class="control-divider"></div>
+                <button class="control-btn" id="sound-btn" onclick="toggleSound()" aria-label="Sound">🔊</button>
+                <button class="control-btn" id="pause-btn" onclick="togglePause()" aria-label="Pause">⏸</button>
+                <button class="control-btn flag-mode-btn" id="flag-mode-btn" onclick="toggleFlagMode()" aria-label="Flag mode"><img src="assets/flag.png" alt="Flag"></button>
             </div>
 
             <!-- ==========================================
