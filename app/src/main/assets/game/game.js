@@ -11,7 +11,6 @@
 // =====================================================
 
 let eventController = null;
-let boardEventsBound = false;
 
 // =====================================================
 // Difficulty Settings
@@ -139,7 +138,7 @@ function isWaterAt(centerX, centerY, radius) {
 // Hex Settings
 // =====================================================
 
-const TARGET_HEX_SIZE_NATURAL = 48;
+const TARGET_HEX_SIZE_NATURAL = 40;
 
 let HEX_SIZE_NAT = 0;
 
@@ -188,70 +187,17 @@ function naturalToScreen(nx, ny) {
 // Build Hex Grid From Water Mask
 // =====================================================
 
+const PRECOMPUTED_WATER_CELLS = [[425.1,165.0],[502.3,165.0],[579.6,165.0],[656.9,165.0],[231.8,231.0],[309.1,231.0],[386.4,231.0],[463.7,231.0],[541.0,231.0],[618.3,231.0],[695.5,231.0],[772.8,231.0],[193.2,297.0],[425.1,297.0],[502.3,297.0],[579.6,297.0],[656.9,297.0],[734.2,297.0],[811.5,297.0],[77.3,363.0],[309.1,363.0],[386.4,363.0],[463.7,363.0],[541.0,363.0],[618.3,363.0],[695.5,363.0],[772.8,363.0],[850.1,363.0],[115.9,429.0],[193.2,429.0],[270.5,429.0],[347.8,429.0],[425.1,429.0],[502.3,429.0],[579.6,429.0],[656.9,429.0],[734.2,429.0],[811.5,429.0],[77.3,495.0],[154.6,495.0],[231.8,495.0],[309.1,495.0],[386.4,495.0],[463.7,495.0],[541.0,495.0],[618.3,495.0],[695.5,495.0],[772.8,495.0],[850.1,495.0],[38.6,561.0],[115.9,561.0],[193.2,561.0],[270.5,561.0],[347.8,561.0],[425.1,561.0],[502.3,561.0],[579.6,561.0],[656.9,561.0],[734.2,561.0],[811.5,561.0],[77.3,627.0],[154.6,627.0],[231.8,627.0],[309.1,627.0],[386.4,627.0],[618.3,627.0],[695.5,627.0],[772.8,627.0],[850.1,627.0],[38.6,693.0],[115.9,693.0],[193.2,693.0],[270.5,693.0],[347.8,693.0],[579.6,693.0],[656.9,693.0],[734.2,693.0],[811.5,693.0],[77.3,759.0],[154.6,759.0],[231.8,759.0],[309.1,759.0],[541.0,759.0],[618.3,759.0],[695.5,759.0],[772.8,759.0],[850.1,759.0],[38.6,825.0],[115.9,825.0],[193.2,825.0],[270.5,825.0],[502.3,825.0],[579.6,825.0],[656.9,825.0],[734.2,825.0],[811.5,825.0],[77.3,891.0],[154.6,891.0],[541.0,891.0],[618.3,891.0],[695.5,891.0],[772.8,891.0],[850.1,891.0],[38.6,957.0],[579.6,957.0],[656.9,957.0],[734.2,957.0],[811.5,957.0],[541.0,1023.0],[618.3,1023.0],[695.5,1023.0],[772.8,1023.0],[850.1,1023.0],[502.3,1089.0],[579.6,1089.0],[656.9,1089.0],[734.2,1089.0],[811.5,1089.0],[541.0,1155.0],[618.3,1155.0],[695.5,1155.0],[772.8,1155.0],[850.1,1155.0],[579.6,1221.0],[656.9,1221.0],[734.2,1221.0],[811.5,1221.0],[618.3,1287.0],[695.5,1287.0],[772.8,1287.0],[850.1,1287.0],[656.9,1353.0],[734.2,1353.0],[811.5,1353.0],[772.8,1419.0],[850.1,1419.0]];
+
 function buildHexGridFromMask() {
   board = [];
-
   cellIdCounter = 0;
-
   calculateNaturalHexSize();
-
-  const HEX_GAP = 2;
-
-  const stepX = HEX_WIDTH_NAT + HEX_GAP;
-
-  const stepY = VERTICAL_SPACING_NAT + HEX_GAP * 0.75;
-
-  const radius = HEX_SIZE_NAT * 0.52;
-
-  let row = 0;
-
-  for (let y = stepY * 0.5; y < MAP_HEIGHT + stepY; y += stepY, row++) {
-    const offsetX = row % 2 === 1 ? stepX * 0.5 : 0;
-
-    for (let x = stepX * 0.5 + offsetX; x < MAP_WIDTH + stepX; x += stepX) {
-      if (isWaterAt(x, y, radius)) {
-        board.push({
-          id: cellIdCounter++,
-
-          naturalX: x,
-
-          naturalY: y,
-
-          mine: false,
-
-          number: 0,
-
-          open: false,
-
-          flag: false,
-
-          exploded: false,
-
-          element: null,
-
-          neighbors: [],
-        });
-      }
-    }
-  }
-
-  console.log("Water hexes:", board.length);
-
-  // Defensive fallback for Android WebView: if canvas mask sampling fails,
-  // build a conservative center-water grid so the game never starts invisible.
-  if (board.length < MINE_COUNT) {
-    console.warn("Mask sampling produced too few cells; using fallback grid.");
-    board = []; cellIdCounter = 0;
-    let r = 0;
-    for (let y = stepY; y < MAP_HEIGHT - stepY; y += stepY, r++) {
-      const off = r % 2 ? stepX * 0.5 : 0;
-      for (let x = stepX + off; x < MAP_WIDTH - stepX; x += stepX) {
-        // Keep fallback mostly in the sea: accept dark/blue map pixels.
-        const p = (()=>{ try { return mapContext.getImageData(Math.round(x),Math.round(y),1,1).data; } catch(e){ return [0,0,0,255]; }})();
-        if (p[0] < 180) board.push({id:cellIdCounter++,naturalX:x,naturalY:y,mine:false,number:0,open:false,flag:false,exploded:false,element:null,neighbors:[]});
-      }
-    }
-  }
+  PRECOMPUTED_WATER_CELLS.forEach(([x,y]) => board.push({
+    id: cellIdCounter++, naturalX:x, naturalY:y, mine:false, number:0,
+    open:false, flag:false, exploded:false, element:null, neighbors:[]
+  }));
+  console.log("Precomputed water hexes:", board.length);
 }
 
 // =====================================================
@@ -316,11 +262,11 @@ function resizeBoard() {
 
   boardEl.style.overflow = "hidden";
 
-  const scale = (map.clientWidth > 0 && MAP_WIDTH > 0) ? map.clientWidth / MAP_WIDTH : 1;
+  const scale = map.clientWidth / MAP_WIDTH;
 
-  const displayWidth = Math.max(22, HEX_WIDTH_NAT * scale);
+  const displayWidth = HEX_WIDTH_NAT * scale;
 
-  const displayHeight = Math.max(26, HEX_HEIGHT_NAT * scale);
+  const displayHeight = HEX_HEIGHT_NAT * scale;
 
   board.forEach((cell) => {
     if (!cell.element) return;
@@ -768,11 +714,11 @@ function createBoardHTML() {
 
   const map = document.getElementById("sea-map");
 
-  const scale = (map.clientWidth > 0 && MAP_WIDTH > 0) ? map.clientWidth / MAP_WIDTH : 1;
+  const scale = map.clientWidth / MAP_WIDTH;
 
-  const displayWidth = Math.max(22, HEX_WIDTH_NAT * scale);
+  const displayWidth = HEX_WIDTH_NAT * scale;
 
-  const displayHeight = Math.max(26, HEX_HEIGHT_NAT * scale);
+  const displayHeight = HEX_HEIGHT_NAT * scale;
 
   board.forEach((cell) => {
     const el = document.createElement("div");
@@ -1398,11 +1344,11 @@ async function startApplication() {
 
   // Events
 
-  if (!boardEventsBound) {
-    enableBoardClick();
-    enableRightClick();
-    boardEventsBound = true;
-  }
+  enableBoardClick();
+
+  enableRightClick();
+
+  enableLongPress();
 
   console.log("Game Ready");
 }
@@ -1419,43 +1365,14 @@ function restartGame() {
 
 function loadMap() {
   return new Promise((resolve) => {
-    let loaded = 0;
-
-    const done = () => {
-      loaded++;
-
-      if (loaded < 2) {
-        return;
-      }
-
-      MAP_WIDTH = mapImage.naturalWidth;
-
-      MAP_HEIGHT = mapImage.naturalHeight;
-
-      mapCanvas.width = MAP_WIDTH;
-
-      mapCanvas.height = MAP_HEIGHT;
-
-      mapContext.clearRect(0, 0, MAP_WIDTH, MAP_HEIGHT);
-
-      mapContext.drawImage(maskImage, 0, 0, MAP_WIDTH, MAP_HEIGHT);
-
+    const finish = () => {
+      MAP_WIDTH = mapImage.naturalWidth || 871;
+      MAP_HEIGHT = mapImage.naturalHeight || 1536;
       calculateNaturalHexSize();
-
       resolve();
     };
-
-    mapImage.onload = done;
-
-    maskImage.onload = done;
-
-    if (mapImage.complete && mapImage.naturalWidth) {
-      done();
-    }
-
-    if (maskImage.complete && maskImage.naturalWidth) {
-      done();
-    }
+    if (mapImage.complete && mapImage.naturalWidth) finish();
+    else { mapImage.onload = finish; mapImage.onerror = finish; }
   });
 }
 
