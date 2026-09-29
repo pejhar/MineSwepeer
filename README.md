@@ -35,3 +35,11 @@ Debug: `gradle assembleDebug`.
 - Flag mode: tap a cell to place/remove a flag; tap the flag button again to return to dig mode.
 - Reworked start screen and instructions.
 - AdMob removed; Tapsell Plus 2.3.3 packaged.
+
+## v1.9 visual refactor
+- Reference-driven third-panel gameplay HUD and floating controls.
+- MediaAd slot remains at the top with `mediaad-JR3Ax` and keynu.ir loader.
+- Full hexes only: edge-clipped cells are filtered out.
+- Larger clue dots replace numeric clues.
+- Glossy layered SVG hex rendering with stronger contrast.
+- Start sound retained.
