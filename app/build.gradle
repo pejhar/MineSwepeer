@@ -1,10 +1,48 @@
-plugins { id 'com.android.application' }
-
-android { namespace 'ir.keynu.hormuzmines'; compileSdk 35
-    defaultConfig { applicationId 'ir.keynu.hormuzmines'; minSdk 23; targetSdk 35; versionCode 1; versionName '1.0.0' }
-    buildTypes { release { minifyEnabled true; shrinkResources true; proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro' } }
+plugins {
+    id 'com.android.application'
 }
 
+android {
+    namespace 'com.koregeloo.minesweeper'
+    compileSdk 35
+
+    defaultConfig {
+        // Package Name ثبت‌شده در کافه‌بازار
+        applicationId 'com.koregeloo.minesweeper'
+
+        minSdk 23
+        targetSdk 35
+
+        versionCode 1
+        versionName '1.0.0'
+    }
+
+    signingConfigs {
+        release {
+            def keystorePath = System.getenv("ANDROID_KEYSTORE_PATH")
+            if (keystorePath != null) {
+                storeFile file(keystorePath)
+            }
+
+            storePassword System.getenv("ANDROID_KEYSTORE_PASSWORD")
+            keyAlias System.getenv("ANDROID_KEY_ALIAS")
+            keyPassword System.getenv("ANDROID_KEY_PASSWORD")
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled true
+            shrinkResources true
+
+            signingConfig signingConfigs.release
+
+            proguardFiles getDefaultProguardFile(
+                    'proguard-android-optimize.txt'
+            ), 'proguard-rules.pro'
+        }
+    }
+}
 
 dependencies {
 }
