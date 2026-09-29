@@ -20,9 +20,9 @@ function toggleFlag(c){if(finished||paused||c.open)return;const used=board.filte
 function updateHud(){const left=Math.max(0,mines-board.filter(c=>c.flag).length);$('mine-count').textContent=mines;$('flag-left').textContent=left;$('timer').textContent=formatTime(seconds);$('flag-mode-btn').classList.toggle('active',flagMode)}
 function formatTime(s){return`${String(Math.floor(s/60)).padStart(2,'0')}:${String(s%60).padStart(2,'0')}`}
 function startTimer(){stopTimer();timerId=setInterval(()=>{if(!paused){seconds++;updateHud()}},1000)}function stopTimer(){if(timerId)clearInterval(timerId);timerId=null}
-function restartGame(withSound=false){stopTimer();started=false;finished=false;paused=false;flagMode=false;seconds=0;$('pause-overlay').classList.add('hidden');$('result-overlay').classList.add('hidden');$('pause-btn').textContent='Ⅱ';mines=DIFFICULTIES[difficulty].mines;build();if(withSound)playSound('startSound')}
+function restartGame(withSound=false){stopTimer();started=false;finished=false;paused=false;flagMode=false;seconds=0;$('pause-overlay').classList.add('hidden');$('result-overlay').classList.add('hidden');document.body.classList.remove('game-paused');mines=DIFFICULTIES[difficulty].mines;build();if(withSound)playSound('startSound')}
 function toggleFlagMode(){if(paused||finished)return;flagMode=!flagMode;updateHud();vibrate(15)}
-function togglePause(){if(finished)return;paused=!paused;$('pause-overlay').classList.toggle('hidden',!paused);$('pause-btn').textContent=paused?'▶':'Ⅱ';if(paused)renderBestTimes()}
+function togglePause(){if(finished)return;paused=!paused;$('pause-overlay').classList.toggle('hidden',!paused);document.body.classList.toggle('game-paused',paused);const pt=$('pause-time');if(pt)pt.textContent=formatTime(seconds);if(paused)vibrate(18)}
 function renderBestTimes(){$('best-times').innerHTML=['easy','medium','hard'].map(k=>`<div class="best-row"><span>${k.toUpperCase()}</span><b>${localStorage.getItem('hm_best_'+k)||'—'}</b></div>`).join('')}
 function saveBest(){const key='hm_best_'+difficulty,old=Number(localStorage.getItem(key)||0);if(!old||seconds<old)localStorage.setItem(key,String(seconds))}
 function showResult(win){$('result-icon').innerHTML=win?'🏆':'<img src="assets/mine.png" alt="Naval mine" class="result-mine">';$('result-title').textContent=win?'YOU WIN!':'MINE HIT!';$('result-text').textContent=win?`Time ${formatTime(seconds)}`:'Try another route through the Gulf.';$('result-overlay').classList.remove('hidden');playSound(win?'winSound':'boomSound');vibrate(win?[35,30,35]:[100,70,180])}
@@ -38,7 +38,7 @@ document.addEventListener('DOMContentLoaded',()=>{const svg=$('board');svg.addEv
 let musicEnabled=true;
 function showMenu(){playSound('startSound');$('splash')?.classList.add('hidden-screen');$('menu')?.classList.remove('hidden-screen');$('game')?.classList.add('hidden-screen')}
 function startFromMenu(){$('menu')?.classList.add('hidden-screen');$('game')?.classList.remove('hidden-screen');restartGame(true);if(musicEnabled&&!soundMuted)$('oceanSound')?.play().catch(()=>{})}
-function backToMenu(){stopTimer();paused=false;$('game')?.classList.add('hidden-screen');$('menu')?.classList.remove('hidden-screen')}
+function backToMenu(){stopTimer();paused=false;document.body.classList.remove('game-paused');$('pause-overlay')?.classList.add('hidden');$('game')?.classList.add('hidden-screen');$('menu')?.classList.remove('hidden-screen')}
 function openSettings(){$('settings')?.classList.remove('hidden')}
 function closeSettings(){$('settings')?.classList.add('hidden')}
 function setSound(on){soundMuted=!on;['startSound','clickSound','boomSound','winSound'].forEach(id=>{const a=$(id);if(a)a.muted=!on})}

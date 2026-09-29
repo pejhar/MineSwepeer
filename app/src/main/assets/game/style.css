@@ -37,3 +37,23 @@
 .difficulty-picker button.selected{border-color:#ffe274;transform:scale(1.025);box-shadow:inset 0 2px #ffffff35,inset 0 -3px #0003,0 0 0 3px #ffcf3d28,0 0 22px #ffc83d6b,0 8px 18px #0008}
 .difficulty-picker button.selected b{color:#fff8d0;text-shadow:0 2px 3px #0008}
 @media(max-width:390px){#game-dock{gap:6px;padding-left:6px;padding-right:6px}.hud-btn,.hud-stat{height:44px;min-width:50px}.hud-stat{gap:5px}.hud-stat img{width:24px;height:24px}.hud-stat b{font-size:16px}.round-btn{width:44px;height:44px;font-size:20px}.difficulty-picker button{height:58px}}
+
+
+/* v2.5 timer-driven pause + cleaner gameplay HUD */
+.pause-timer{border:1px solid #66dff06b;cursor:pointer;padding:0 12px;transition:transform .12s,border-color .12s,box-shadow .12s;background:linear-gradient(180deg,#0d4c65,#062c42)}
+.pause-timer:active{transform:scale(.96)}
+.pause-timer .timer-icon{font-size:24px;filter:drop-shadow(0 2px 2px #0008)}
+.pause-timer b{min-width:52px;font-variant-numeric:tabular-nums;font-size:18px!important;letter-spacing:.4px}
+.pause-overlay{background:rgba(0,18,29,.42);-webkit-backdrop-filter:blur(13px) saturate(.72);backdrop-filter:blur(13px) saturate(.72)}
+.pause-panel{width:min(86vw,340px);padding:27px 24px 22px;text-align:center;color:#fff;border-radius:28px;background:linear-gradient(180deg,rgba(8,54,73,.96),rgba(3,30,44,.97));border:1px solid rgba(117,228,246,.42);box-shadow:0 24px 70px #000c,inset 0 1px rgba(255,255,255,.15)}
+.pause-mark{width:62px;height:62px;margin:0 auto 12px;border-radius:50%;display:grid;place-items:center;font-size:29px;font-weight:1000;background:linear-gradient(#124e67,#062c40);border:2px solid #ffffff4d;box-shadow:0 8px 22px #0008,inset 0 2px #ffffff1c}
+.pause-panel h2{margin:2px 0 5px;color:#ffd65c;font-size:29px;letter-spacing:2px;text-shadow:0 3px 8px #0008}
+.pause-panel p{margin:0;color:#a9c8d3;font-size:13px;text-transform:uppercase;letter-spacing:1.5px}
+#pause-time{margin:8px 0 22px;font-size:40px;line-height:1;font-weight:1000;font-variant-numeric:tabular-nums;letter-spacing:2px;text-shadow:0 4px 12px #000}
+.pause-panel button{width:100%;height:54px;border-radius:16px;font-weight:1000;font-size:16px}
+.resume-btn{border:1px solid #fff0a2;color:#4d2b04;background:linear-gradient(#ffe263,#ffac18);box-shadow:inset 0 2px #fff9c0,0 6px 0 #9a560b,0 12px 22px #0007}
+.resume-btn span{margin-right:7px}
+.pause-menu-btn{margin-top:15px;border:1px solid #6ad9ef66;color:#e9fbff;background:linear-gradient(#0c4a63,#062d43);box-shadow:inset 0 2px #ffffff12,0 6px 14px #0006}
+.game-paused #map-container,.game-paused #game-dock{pointer-events:none}
+#controls{display:none!important}
+@media(max-width:390px){.pause-panel{padding:23px 20px 19px}.pause-mark{width:56px;height:56px}#pause-time{font-size:36px}}
