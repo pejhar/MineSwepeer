@@ -25,14 +25,23 @@ function toggleFlagMode(){if(paused||finished)return;flagMode=!flagMode;updateHu
 function togglePause(){if(finished)return;paused=!paused;$('pause-overlay').classList.toggle('hidden',!paused);document.body.classList.toggle('game-paused',paused);const pt=$('pause-time');if(pt)pt.textContent=formatTime(seconds);if(paused)vibrate(18)}
 function renderBestTimes(){$('best-times').innerHTML=['easy','medium','hard'].map(k=>`<div class="best-row"><span>${({easy:'آسان',medium:'متوسط',hard:'سخت'})[k]}</span><b>${localStorage.getItem('hm_best_'+k)||'—'}</b></div>`).join('')}
 function saveBest(){const key='hm_best_'+difficulty,old=Number(localStorage.getItem(key)||0);if(!old||seconds<old)localStorage.setItem(key,String(seconds))}
-function showResult(win,lossSoundAlreadyPlayed=false){const safeTotal=board.length-mines;const safeOpened=board.filter(x=>!x.mine&&x.open).length;const correctFlags=board.filter(x=>x.flag&&x.mine).length;$('result-icon').innerHTML=win?'🏆':'<img src="assets/mine.png" alt="مین دریایی" class="result-mine">';$('result-title').textContent=win?'پیروز شدید!':'پایان بازی';$('result-text').innerHTML=`<div class="result-stats"><div><span>زمان</span><b>${formatTime(seconds)}</b></div><div><span>خانه‌های امن</span><b>${safeOpened} / ${safeTotal}</b></div><div><span>پرچم‌های درست</span><b>${correctFlags} / ${mines}</b></div><div><span>درجه سختی</span><b>${({easy:'آسان',medium:'متوسط',hard:'سخت'})[difficulty]}</b></div></div>${win?'':'<p class="retry-copy">روی مین رفتید! صفحه را بررسی کنید و دوباره تلاش کنید.</p>'}`;$('result-overlay').classList.remove('hidden');if(win){playSound('winSound');vibrate([35,30,35])}else if(!lossSoundAlreadyPlayed){playSound('boomSound');vibrate([120,55,220])}}
+function showResult(win,lossSoundAlreadyPlayed=false){const safeTotal=board.length-mines;const safeOpened=board.filter(x=>!x.mine&&x.open).length;const correctFlags=board.filter(x=>x.flag&&x.mine).length;$('result-icon').innerHTML=win?'🏆':'<img src="assets/mine.png" alt="Naval mine" class="result-mine">';$('result-title').textContent=win?'برنده شدید!':'بازی تمام شد';$('result-text').innerHTML=`<div class="result-stats"><div><span>زمان</span><b>${formatTime(seconds)}</b></div><div><span>خانه‌های امن</span><b>${safeOpened} / ${safeTotal}</b></div><div><span>پرچم‌های درست</span><b>${correctFlags} / ${mines}</b></div><div><span>درجه سختی</span><b>${({easy:'آسان',medium:'متوسط',hard:'سخت'})[difficulty]}</b></div></div>${win?'':'<p class="retry-copy">روی مین رفتید! صفحه را بررسی کنید و دوباره تلاش کنید.</p>'}`;$('result-overlay').classList.remove('hidden');if(win){playSound('winSound');vibrate([35,30,35])}else if(!lossSoundAlreadyPlayed){playSound('boomSound');vibrate([120,55,220])}}
 function hideResult(){$('result-overlay').classList.add('hidden')}
 function vibrate(x){if(!vibrationEnabled)return;try{navigator.vibrate&&navigator.vibrate(x)}catch(_) {}}
 function dismissSplash(){playSound('startSound');$('splash').classList.add('hide');setTimeout(()=>$('splash')?.remove(),300);if(!soundMuted)$('oceanSound')?.play().catch(()=>{})}
 function toggleSound(){soundMuted=!soundMuted;for(const id of['oceanSound','startSound','clickSound','boomSound','winSound']){const a=$(id);if(a)a.muted=soundMuted}$('sound-btn').textContent=soundMuted?'🔇':'🔊';if(!soundMuted)$('oceanSound')?.play().catch(()=>{})}
 function chooseDifficulty(k){if(!DIFFICULTIES[k])return;difficulty=k;mines=DIFFICULTIES[k].mines;document.querySelectorAll('.difficulty-picker button').forEach(b=>b.classList.toggle('selected',b.dataset.diff===k));restartGame(false)}
 Object.assign(window,{chooseDifficulty,restartGame,toggleFlagMode,togglePause,hideResult,dismissSplash,toggleSound});
-document.addEventListener('DOMContentLoaded',()=>{const svg=$('board');svg.addEventListener('click',e=>{const g=e.target.closest('.cell');if(!g)return;const c=board.find(x=>x.id===Number(g.dataset.id));if(c)(flagMode?toggleFlag:openCell)(c)});restartGame();console.info(`Hormuz board: ${board.length} complete hexes`) });
+// نمایش همه اعداد قابل مشاهده با رقم‌های فارسی، بدون تغییر داده‌های ذخیره‌شده
+const toPersianDigits = value => String(value).replace(/[0-9]/g, d => '۰۱۲۳۴۵۶۷۸۹'[Number(d)]);
+function localizeVisibleDigits(root=document.body){
+  const walker=document.createTreeWalker(root,NodeFilter.SHOW_TEXT);
+  const nodes=[]; while(walker.nextNode()) nodes.push(walker.currentNode);
+  for(const node of nodes){const v=node.nodeValue;if(/[0-9]/.test(v))node.nodeValue=toPersianDigits(v)}
+}
+localizeVisibleDigits();
+new MutationObserver(records=>{for(const r of records){if(r.type==='characterData' && /[0-9]/.test(r.target.nodeValue))r.target.nodeValue=toPersianDigits(r.target.nodeValue);for(const n of r.addedNodes||[]){if(n.nodeType===Node.TEXT_NODE){if(/[0-9]/.test(n.nodeValue))n.nodeValue=toPersianDigits(n.nodeValue)}else if(n.nodeType===Node.ELEMENT_NODE)localizeVisibleDigits(n)}}}).observe(document.documentElement,{subtree:true,childList:true,characterData:true});
+document.addEventListener('DOMContentLoaded',()=>{const svg=$('board');svg.addEventListener('click',e=>{const g=e.target.closest('.cell');if(!g)return;const c=board.find(x=>x.id===Number(g.dataset.id));if(c)(flagMode?toggleFlag:openCell)(c)});restartGame();console.info(`صفحه بازی آماده است: ${board.length} خانه`) });
 
 // v2.1 screen/navigation + compact settings
 let musicEnabled=true;
@@ -46,5 +55,5 @@ function setMusic(on){musicEnabled=on;const a=$('oceanSound');if(!a)return;if(on
 function setVibration(on){vibrationEnabled=!!on;if(vibrationEnabled)vibrate(20)}
 Object.assign(window,{showMenu,startFromMenu,backToMenu,openSettings,closeSettings,setSound,setMusic,setVibration});
 
-function rateOnMyket(){const ok=window.confirm('اگر از بازی راضی هستید، مایلید در مایکت به آن امتیاز دهید؟');if(ok&&window.MyketBridge){window.MyketBridge.openRating();}}
+function rateOnMyket(){try{if(window.AndroidBridge&&AndroidBridge.openMyketRating){AndroidBridge.openMyketRating();return}}catch(e){}window.location.href='https://myket.ir/app/ir.keynu.hormuzmines'}
 Object.assign(window,{rateOnMyket});
