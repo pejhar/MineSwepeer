@@ -158,3 +158,21 @@ button:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
 .setting-row i{background:#345363;border:1px solid #7a9eaa55}.setting-row input:checked+i{background:#0ca9b9}.setting-row input:checked+i:after{transform:translateX(24px)}
 @media(max-height:700px){#menu{gap:6px;padding-top:max(10px,env(safe-area-inset-top));padding-bottom:max(8px,env(safe-area-inset-bottom))}.menu-brand img{width:clamp(66px,10vh,82px);height:clamp(66px,10vh,82px)}.menu-brand small{display:none}.menu-brand strong{font-size:clamp(28px,4vh,32px)}.menu-brand span{font-size:17px}.start-game{height:44px}.difficulty-picker{gap:5px}.difficulty-picker button{height:40px}.howto{font-size:10px;padding:7px 10px}#ad-shell{height:46px;min-height:46px;max-height:46px;flex-basis:46px}#game{grid-template-rows:46px minmax(0,1fr) auto}#mediaad-JRm7j,#mediaad-JRm7j iframe,#mediaad-JRm7j img{max-height:42px!important}}
 @media(max-width:360px){.myket-rate{font-size:10px;padding:0 9px}.difficulty-picker button{padding:0 10px;grid-template-columns:28px 1fr auto}.hud-stat{min-width:48px}.hud-stat img{width:23px;height:23px}}
+
+/* v2.8 — menu becomes the first screen; no splash tap or Myket rating button */
+#menu{background:linear-gradient(180deg,rgba(3,25,43,.42),rgba(3,23,39,.82)),url('assets/splash-reference.png') center/cover no-repeat;}
+#menu>*{position:relative}
+#menu .gear{position:absolute!important;z-index:20;top:max(14px,env(safe-area-inset-top));right:max(14px,env(safe-area-inset-right));left:auto;align-self:auto;margin:0;}
+#menu .menu-brand{margin-top:clamp(24px,5vh,48px)}
+/* Only load the ad provider after entering the game; its banner has a dedicated row. */
+#game{grid-template-rows:clamp(48px,6.4vh,56px) minmax(0,1fr) auto}
+#ad-shell{width:100%;min-width:0;}
+#mediaad-JRm7j{max-width:100%;}
+#mediaad-JRm7j iframe,#mediaad-JRm7j img,#mediaad-JRm7j video,#mediaad-JRm7j canvas{max-width:100%!important;max-height:48px!important;object-fit:contain!important;}
+/* Strong, unmistakable flag-mode state */
+.flag-stat{position:relative;transition:background .18s ease,border-color .18s ease,box-shadow .18s ease,transform .18s ease,filter .18s ease;}
+.flag-stat.active{border:2px solid #fff1a8!important;background:linear-gradient(145deg,#ffcf4b 0%,#ff9e20 48%,#e66a16 100%)!important;color:#241407!important;box-shadow:inset 0 2px 0 #fff9cf, inset 0 -4px 0 #b54d0b,0 0 0 3px #ffb52b55,0 0 22px #ffad21c9,0 7px 15px #0008!important;transform:translateY(-2px) scale(1.035)!important;filter:saturate(1.18);}
+.flag-stat.active img{filter:drop-shadow(0 2px 1px #7b310a) brightness(1.12);transform:scale(1.12);}
+.flag-stat.active b{color:#301703!important;text-shadow:0 1px #fff5;font-weight:900;}
+.flag-stat.active:after{content:'حالت پرچم';position:absolute;bottom:calc(100% + 7px);left:50%;transform:translateX(-50%);white-space:nowrap;padding:3px 8px;border-radius:8px;background:#ffbf3b;color:#38200a;font:700 10px NotoKufi,Tahoma,sans-serif;box-shadow:0 3px 9px #0008;pointer-events:none;}
+@media(max-height:700px){#menu .menu-brand{margin-top:20px}#menu .gear{top:max(10px,env(safe-area-inset-top));}}

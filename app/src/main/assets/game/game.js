@@ -46,7 +46,8 @@ document.addEventListener('DOMContentLoaded',()=>{const svg=$('board');svg.addEv
 // v2.1 screen/navigation + compact settings
 let musicEnabled=true;
 function showMenu(){$('splash')?.classList.add('hidden-screen');$('menu')?.classList.remove('hidden-screen');$('game')?.classList.add('hidden-screen')}
-function startFromMenu(){$('menu')?.classList.add('hidden-screen');$('game')?.classList.remove('hidden-screen');restartGame(true);if(musicEnabled&&!soundMuted)$('oceanSound')?.play().catch(()=>{})}
+function startFromMenu(){$('menu')?.classList.add('hidden-screen');$('game')?.classList.remove('hidden-screen');loadGameAds();restartGame(true);if(musicEnabled&&!soundMuted)$('oceanSound')?.play().catch(()=>{})}
+function loadGameAds(){if(window.__hormuzAdsLoaded)return;window.__hormuzAdsLoaded=true;const s=document.createElement('script');s.async=true;s.src='https://s1.mediaad.org/serve/keynu.ir/loader.js';document.head.appendChild(s)}
 function backToMenu(){stopTimer();paused=false;document.body.classList.remove('game-paused');$('pause-overlay')?.classList.add('hidden');$('game')?.classList.add('hidden-screen');$('menu')?.classList.remove('hidden-screen')}
 function openSettings(){$('settings')?.classList.remove('hidden')}
 function closeSettings(){$('settings')?.classList.add('hidden')}
@@ -55,5 +56,4 @@ function setMusic(on){musicEnabled=on;const a=$('oceanSound');if(!a)return;if(on
 function setVibration(on){vibrationEnabled=!!on;if(vibrationEnabled)vibrate(20)}
 Object.assign(window,{showMenu,startFromMenu,backToMenu,openSettings,closeSettings,setSound,setMusic,setVibration});
 
-function rateOnMyket(){try{if(window.AndroidBridge&&AndroidBridge.openMyketRating){AndroidBridge.openMyketRating();return}}catch(e){}window.location.href='https://myket.ir/app/ir.keynu.hormuzmines'}
-Object.assign(window,{rateOnMyket});
+
