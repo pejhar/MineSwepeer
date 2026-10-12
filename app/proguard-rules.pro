@@ -1,1 +1,1 @@
--keep class ir.keynu.hormuzmines.MainActivity { *; }
+-keep class ir.exemplar.hormuzminesweeper.MainActivity { *; }

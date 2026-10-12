@@ -1,17 +1,17 @@
-# Signed release build
+# ساخت نسخه انتشار امضاشده
 
-Package name: `ir.keynu.hormuzmines`
+شناسه بسته پیشنهادی: `ir.exemplar.hormuzminesweeper`
 
-GitHub Actions workflow: `.github/workflows/build-release.yml`
+**پیش از انتشار:** آزاد بودن این شناسه در مایکت را در پنل توسعه‌دهندگان بررسی کنید. اگر شناسه توسط برنامه دیگری رزرو شده باشد، باید شناسه دیگری انتخاب شود.
 
-Required repository secrets:
+گردش‌کار GitHub Actions: `.github/workflows/build-release.yml`
 
+Secrets لازم در مخزن GitHub:
 - `KEYSTORE_BASE64`
 - `KEYSTORE_PASSWORD`
 - `KEY_ALIAS`
 - `KEY_PASSWORD`
 
-Run: Actions -> Build Signed Release APK -> Run workflow.
-The artifact is named `ir.keynu.hormuzmines-release`.
+در تب Actions، گردش‌کار `Build Signed Release APK` را اجرا کنید. فایل خروجی `ir.exemplar.hormuzminesweeper-release.apk` خواهد بود.
 
-Do not commit `release.jks` or `keystore-base64.txt`.
+فایل keystore را در ZIP یا مخزن عمومی قرار ندهید.

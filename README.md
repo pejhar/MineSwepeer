@@ -1,9 +1,9 @@
 # Hormuz Minesweeper v1.8
 
 # Hormuz Minesweeper Android
-Lightweight offline Android wrapper for the supplied Hormuz Minesweeper game.
+Android wrapper for the Persian Hormuz Minesweeper game. The game UI, map, fonts and sounds are bundled in the APK; advertising requires an Internet connection.
 
-- Offline: no INTERNET permission
+- Core gameplay works from bundled assets; Internet permission is retained for the in-game ad loader
 - Portrait immersive fullscreen
 - Tap to dig, long-press to flag
 - Easy / Medium / Hard: 10 / 15 / 25 mines
@@ -16,7 +16,7 @@ Debug: `gradle assembleDebug`.
 
 ## Offline + Ads architecture
 - All game HTML/CSS/JS, maps, fonts and sounds are packaged inside the APK.
-- The WebView blocks all HTTP/HTTPS traffic, so gameplay cannot depend on the Internet.
+- Core game files load locally from the APK. The ad loader is requested only after entering the game screen.
 - Only the native Tapsell Plus SDK is allowed to use the network.
 - Tapsell Plus SDK 2.3.3 is packaged and initialized with Tapsell's official test app key. Replace it with your production Tapsell app key before publishing. A production banner/interstitial also requires your dashboard zone ID.
 - Added: pause overlay, sound toggle, best time per difficulty, win/lose overlay, particle/explosion effects, vibration permission, lifecycle-safe ad handling.
