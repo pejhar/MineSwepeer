@@ -1,14 +1,4 @@
-<!DOCTYPE html><html lang="fa" dir="rtl"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no"><meta name="theme-color" content="#06384a"><title>مین‌روب هرمز</title><link rel="stylesheet" href="style.css"><link rel="icon" href="assets/icon.png"><script type="text/javascript">
-(function () {
-  const head = document.getElementsByTagName("head")[0];
-  const script = document.createElement("script");
-  script.type = "text/javascript";
-  script.async = true;
-  script.src = "https://s1.mediaad.org/serve/keynu.ir/loader.js";
-  head.appendChild(script);
-})();
-</script>
-</head><body>
+<!DOCTYPE html><html lang="fa" dir="rtl"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no"><meta name="theme-color" content="#06384a"><title>مین‌روب هرمز</title><link rel="stylesheet" href="style.css"><link rel="icon" href="assets/icon.png"></head><body>
 <audio id="oceanSound" loop preload="auto"><source src="assets/sounds/background.mp3"></audio><audio id="startSound" preload="auto"><source src="assets/sounds/start.wav"></audio><audio id="clickSound" preload="auto"><source src="assets/sounds/click.mp3"></audio><audio id="boomSound" preload="auto"><source src="assets/sounds/boom.mp3"></audio><audio id="winSound" preload="auto"><source src="assets/sounds/win.mp3"></audio>
 <div id="menu" class="screen"><button class="gear" onclick="openSettings()" aria-label="تنظیمات">⚙</button><div class="menu-brand"><img src="assets/icon.png" alt="نشان مین‌روب هرمز"><div><strong>مین‌روب</strong><span>هرمز</span></div><small>ماجراجویی در آب‌های خلیج فارس</small></div><button class="start-game" onclick="startFromMenu()">شروع بازی</button><div class="difficulty-picker"><button data-diff="easy" onclick="chooseDifficulty('easy')"><img src="assets/easy.png"><b>آسان</b><span>۱۰ مین</span></button><button class="selected" data-diff="medium" onclick="chooseDifficulty('medium')"><img src="assets/medium.png"><b>متوسط</b><span>۱۵ مین</span></button><button data-diff="hard" onclick="chooseDifficulty('hard')"><img src="assets/hard.png"><b>سخت</b><span>۲۵ مین</span></button></div><div class="howto"><b>💡 روش بازی</b><br>برای کاوش روی یک خانه بزنید<br>برای گذاشتن یا برداشتن پرچم، دکمه پرچم را فعال کنید</div></div>
 <div id="game" class="hidden-screen"><div id="ad-shell"><div id="mediaad-YwxPZ"></div></div><div id="map-container"><img id="sea-map" src="assets/map.png"><svg id="board" xmlns="http://www.w3.org/2000/svg"></svg></div><div id="game-dock"><div id="bottom-hud"><div class="hud-stat mine-stat"><img src="assets/mine.png" alt=""><b id="mine-count">15</b></div><button class="hud-stat timer pause-timer" id="timer-pause-btn" onclick="togglePause()" aria-label="توقف بازی"><b id="timer">00:00</b></button><button class="hud-stat flag-stat" id="flag-mode-btn" onclick="toggleFlagMode()" aria-label="حالت پرچم"><img src="assets/flag.png" alt=""><b id="flag-left">15</b></button></div></div></div>
