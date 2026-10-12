@@ -135,9 +135,9 @@ button:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
 /* A true reserved banner row: the ad can never overlap the hex grid or bottom HUD. */
 #game{grid-template-rows:clamp(48px,6.4vh,56px) minmax(0,1fr) auto;background:#041b2a}
 #ad-shell{grid-row:1;position:relative;z-index:80;width:100%;height:clamp(48px,6.4vh,56px);min-height:48px;max-height:56px;flex:0 0 clamp(48px,6.4vh,56px);padding:3px 6px;display:flex;align-items:center;justify-content:center;overflow:hidden;contain:layout paint size;background:linear-gradient(90deg,#061d2c,#0a3548 50%,#061d2c);border-bottom:1px solid rgba(89,207,226,.20)}
-#mediaad-JRm7j{display:flex!important;align-items:center;justify-content:center;width:100%;height:100%;max-width:728px;max-height:50px;overflow:hidden;text-align:center}
-#mediaad-JRm7j iframe,#mediaad-JRm7j img,#mediaad-JRm7j video,#mediaad-JRm7j canvas{display:block;max-width:100%!important;max-height:48px!important;width:auto!important;height:auto!important;object-fit:contain;margin:auto}
-#mediaad-JRm7j>*{max-height:50px!important;box-sizing:border-box}
+#mediaad-YwxPZ{display:flex!important;align-items:center;justify-content:center;width:100%;height:100%;max-width:728px;max-height:50px;overflow:hidden;text-align:center}
+#mediaad-YwxPZ iframe,#mediaad-YwxPZ img,#mediaad-YwxPZ video,#mediaad-YwxPZ canvas{display:block;max-width:100%!important;max-height:48px!important;width:auto!important;height:auto!important;object-fit:contain;margin:auto}
+#mediaad-YwxPZ>*{max-height:50px!important;box-sizing:border-box}
 #map-container{grid-row:2;min-height:0;height:100%;overflow:hidden}
 #game-dock{grid-row:3;position:relative;z-index:70;min-height:68px;padding:8px 10px max(8px,env(safe-area-inset-bottom));gap:8px;background:linear-gradient(180deg,#092c40,#041a28);border-top:1px solid rgba(91,213,229,.2);box-shadow:0 -8px 22px #00121f88}
 #bottom-hud{padding:4px;gap:6px;border-radius:17px;border:1px solid rgba(110,219,233,.25);background:rgba(4,24,38,.9);box-shadow:inset 0 1px #ffffff13,0 4px 12px #00121f66}
@@ -156,7 +156,7 @@ button:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
 .settings-title button{width:38px;height:38px;border-radius:12px;background:rgba(4,30,45,.65);border:1px solid rgba(153,222,233,.2);font-size:25px;line-height:1;color:#e8fbff}
 .setting-row{font-size:15px;border-bottom:1px solid rgba(153,222,233,.10)}
 .setting-row i{background:#345363;border:1px solid #7a9eaa55}.setting-row input:checked+i{background:#0ca9b9}.setting-row input:checked+i:after{transform:translateX(24px)}
-@media(max-height:700px){#menu{gap:6px;padding-top:max(10px,env(safe-area-inset-top));padding-bottom:max(8px,env(safe-area-inset-bottom))}.menu-brand img{width:clamp(66px,10vh,82px);height:clamp(66px,10vh,82px)}.menu-brand small{display:none}.menu-brand strong{font-size:clamp(28px,4vh,32px)}.menu-brand span{font-size:17px}.start-game{height:44px}.difficulty-picker{gap:5px}.difficulty-picker button{height:40px}.howto{font-size:10px;padding:7px 10px}#ad-shell{height:46px;min-height:46px;max-height:46px;flex-basis:46px}#game{grid-template-rows:46px minmax(0,1fr) auto}#mediaad-JRm7j,#mediaad-JRm7j iframe,#mediaad-JRm7j img{max-height:42px!important}}
+@media(max-height:700px){#menu{gap:6px;padding-top:max(10px,env(safe-area-inset-top));padding-bottom:max(8px,env(safe-area-inset-bottom))}.menu-brand img{width:clamp(66px,10vh,82px);height:clamp(66px,10vh,82px)}.menu-brand small{display:none}.menu-brand strong{font-size:clamp(28px,4vh,32px)}.menu-brand span{font-size:17px}.start-game{height:44px}.difficulty-picker{gap:5px}.difficulty-picker button{height:40px}.howto{font-size:10px;padding:7px 10px}#ad-shell{height:46px;min-height:46px;max-height:46px;flex-basis:46px}#game{grid-template-rows:46px minmax(0,1fr) auto}#mediaad-YwxPZ,#mediaad-YwxPZ iframe,#mediaad-YwxPZ img{max-height:42px!important}}
 @media(max-width:360px){.myket-rate{font-size:10px;padding:0 9px}.difficulty-picker button{padding:0 10px;grid-template-columns:28px 1fr auto}.hud-stat{min-width:48px}.hud-stat img{width:23px;height:23px}}
 
 /* v2.8 — menu becomes the first screen; no splash tap or Myket rating button */
@@ -167,8 +167,8 @@ button:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
 /* Only load the ad provider after entering the game; its banner has a dedicated row. */
 #game{grid-template-rows:clamp(48px,6.4vh,56px) minmax(0,1fr) auto}
 #ad-shell{width:100%;min-width:0;}
-#mediaad-JRm7j{max-width:100%;}
-#mediaad-JRm7j iframe,#mediaad-JRm7j img,#mediaad-JRm7j video,#mediaad-JRm7j canvas{max-width:100%!important;max-height:48px!important;object-fit:contain!important;}
+#mediaad-YwxPZ{max-width:100%;}
+#mediaad-YwxPZ iframe,#mediaad-YwxPZ img,#mediaad-YwxPZ video,#mediaad-YwxPZ canvas{max-width:100%!important;max-height:48px!important;object-fit:contain!important;}
 /* Strong, unmistakable flag-mode state */
 .flag-stat{position:relative;transition:background .18s ease,border-color .18s ease,box-shadow .18s ease,transform .18s ease,filter .18s ease;}
 .flag-stat.active{border:2px solid #fff1a8!important;background:linear-gradient(145deg,#ffcf4b 0%,#ff9e20 48%,#e66a16 100%)!important;color:#241407!important;box-shadow:inset 0 2px 0 #fff9cf, inset 0 -4px 0 #b54d0b,0 0 0 3px #ffb52b55,0 0 22px #ffad21c9,0 7px 15px #0008!important;transform:translateY(-2px) scale(1.035)!important;filter:saturate(1.18);}

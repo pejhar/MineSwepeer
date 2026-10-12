@@ -46,8 +46,8 @@ document.addEventListener('DOMContentLoaded',()=>{const svg=$('board');svg.addEv
 // v2.1 screen/navigation + compact settings
 let musicEnabled=true;
 function showMenu(){$('splash')?.classList.add('hidden-screen');$('menu')?.classList.remove('hidden-screen');$('game')?.classList.add('hidden-screen')}
-function startFromMenu(){$('menu')?.classList.add('hidden-screen');$('game')?.classList.remove('hidden-screen');restartGame(true);requestAnimationFrame(()=>loadGameAds());if(musicEnabled&&!soundMuted)$('oceanSound')?.play().catch(()=>{})}
-function loadGameAds(){const slot=$('mediaad-YwxPZ');if(!slot||window.__hormuzAdsLoading||window.__hormuzAdsLoaded)return;window.__hormuzAdsLoading=true;slot.setAttribute('aria-label','جایگاه تبلیغات');const s=document.createElement('script');s.type='text/javascript';s.async=true;s.src='https://s1.mediaad.org/serve/keynu.ir/loader.js';s.onload=()=>{window.__hormuzAdsLoaded=true;window.__hormuzAdsLoading=false};s.onerror=()=>{window.__hormuzAdsLoading=false;console.warn('بارگذاری تبلیغات MediaAd ناموفق بود')};document.head.appendChild(s)}
+function startFromMenu(){$('menu')?.classList.add('hidden-screen');$('game')?.classList.remove('hidden-screen');loadGameAds();restartGame(true);if(musicEnabled&&!soundMuted)$('oceanSound')?.play().catch(()=>{})}
+function loadGameAds(){if(window.__hormuzAdsLoaded)return;window.__hormuzAdsLoaded=true;const s=document.createElement('script');s.async=true;s.src='https://s1.mediaad.org/serve/keynu.ir/loader.js';document.head.appendChild(s)}
 function backToMenu(){stopTimer();paused=false;document.body.classList.remove('game-paused');$('pause-overlay')?.classList.add('hidden');$('game')?.classList.add('hidden-screen');$('menu')?.classList.remove('hidden-screen')}
 function openSettings(){$('settings')?.classList.remove('hidden')}
 function closeSettings(){$('settings')?.classList.add('hidden')}
